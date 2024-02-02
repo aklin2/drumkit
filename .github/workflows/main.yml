@@ -2,11 +2,11 @@ name: Create Production Build
 run-name: ${{ github.actor }} is creating production build
 on: [push]
 jobs:
-  check-bats-version:
+  create-producion-build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@main
+      - uses: actions/setup-node@main
         with:
           node-version: '20.10.0'
       - run: npm install
