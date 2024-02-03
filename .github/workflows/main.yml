@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   # Create and then deploy production build static content to GitHub Pages
-  deploy:
+  Create-Production-Build-Then-Deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -29,7 +29,7 @@ jobs:
       - name: Checkout main branch
         uses: actions/checkout@main
       - name: Setup Node
-        uses: action/setup-node@main
+        uses: actions/setup-node@main
         with:
           node-version: '20.10.0'
       - run: npm install
