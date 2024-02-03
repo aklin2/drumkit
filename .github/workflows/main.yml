@@ -1,5 +1,5 @@
-name: Create Production Build
-run-name: ${{ github.actor }} is creating production build
+name: Create and Deploy Production Build
+run-name: ${{ github.actor }} is creating production build and then deploying
 on: 
   push: 
     branches: ['learning-github-actions']
@@ -19,27 +19,21 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # First job - create production build
-  create-production-build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@main
-      - uses: actions/setup-node@main
-        with:
-          node-version: '20.10.0'
-      - run: npm install
-      - run: npm run build
-
-  # Second job - deploy production build static content to GitHub Pages
+  # Create and then deploy production build static content to GitHub Pages
   deploy:
-    needs: create-production-build
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout main branch
+        uses: actions/checkout@main
+      - name: Setup Node
+        uses: action/setup-node@main
+        with:
+          node-version: '20.10.0'
+      - run: npm install
+      - run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
